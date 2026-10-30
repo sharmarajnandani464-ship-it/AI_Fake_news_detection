@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fake News Detection</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    margin: 0;
+    text-align: center;
+}
+
+header {
+    background: #172554;
+    color: white;
+    padding: 25px;
+}
+
+.container {
+    background: white;
+    width: 80%;
+    max-width: 650px;
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px #ccc;
+}
+
+textarea {
+    width: 95%;
+    height: 180px;
+    padding: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #2563eb;
+    color: white;
+    border: 0;
+    padding: 13px 30px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.history-btn {
+    display: inline-block;
+    background: #172554;
+    color: white;
+    padding: 12px 25px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.result {
+    margin-top: 25px;
+    font-size: 22px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>AI Fake News Detection System</h1>
+    <p>Detect Fake and Real News Using Artificial Intelligence</p>
+</header>
+
+<div class="container">
+
+    <h2>Check Your News</h2>
+
+    <form method="POST">
+        <textarea name="news" placeholder="Enter news here..." required>{{ request.form.get('news', '') }}</textarea>
+        <br><br>
+        <button type="submit">Detect News</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result">
+        Prediction: {{ prediction }}
+    </div>
+    {% endif %}
+
+    <a href="/history" class="history-btn">View History</a>
+    <a href="/about" class="history-btn">About Us</a>
+    
+</div>
+
+</body>
+</html>
