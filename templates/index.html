@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fake News Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2ff;
+            text-align: center;
+            padding: 30px;
+        }
+        .container {
+            background: white;
+            max-width: 650px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #ccc;
+        }
+        textarea {
+            width: 95%;
+            height: 150px;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        button {
+            padding: 12px 25px;
+            background: #3949ab;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        a { margin: 10px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>AI Fake News Detection</h1>
+    <p>Enter news text below to check whether it is Fake or Real.</p>
+
+    <form action="/predict" method="POST">
+        <textarea name="news" placeholder="Paste news here..." required></textarea>
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+
+    <p>
+        <a href="/history">History</a>
+        <a href="/about">About</a>
+    </p>
+
+    {% if prediction %}
+        <h2>Prediction: {{ prediction }}</h2>
+    {% endif %}
+</div>
+</body>
+</html>
