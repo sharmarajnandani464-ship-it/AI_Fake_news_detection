@@ -76,7 +76,7 @@ button {
 
     <h2>Check Your News</h2>
 
-    <form method="POST">
+    <form method="POST"action="/">
         <textarea name="news" placeholder="Enter news here..." required>{{ request.form.get('news', '') }}</textarea>
         <br><br>
         <button type="submit">Detect News</button>
