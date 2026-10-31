@@ -24,6 +24,8 @@ y = data["label"]
 print("Total news:", len(data))
 print("Label counts:")
 print(y.value_counts())
+print("Label 0 sample:", data[data["label"] == "0"]["text"].iloc[0])
+print("Label 1 sample:", data[data["label"] == "1"]["text"].iloc[0])
 
 # Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
