@@ -1,12 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>About - AI Fake News Detection</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Fake News Detection</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            text-align: center;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 750px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #ccc;
+            text-align: left;
+        }
+
+        h2 {
+            color: #172554;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: #172554;
+            color: white;
+            padding: 12px 25px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>About This Project</h1>
-    <p>This project uses Machine Learning and Natural Language Processing to detect fake news.</p>
-    <p>It analyzes the entered news text and predicts whether it is Fake or Real.</p>
-    <a href="/">Go Home</a>
+
+<header>
+    <h1>About Our Project</h1>
+    <p>AI Fake News Detection System</p>
+</header>
+
+<div class="container">
+
+    <h2>About the Project</h2>
+
+    <p>
+        The AI Fake News Detection System is a machine learning based
+        web application designed to identify whether a given news article
+        is likely to be real or fake.
+    </p>
+
+    <p>
+        The system uses Natural Language Processing (NLP), TF-IDF
+        text vectorization, and Logistic Regression to analyze the
+        provided news content and generate a prediction.
+    </p>
+
+    <h2>How It Works</h2>
+
+    <p>
+        The user enters a news article into the system. The text is
+        converted into numerical features using TF-IDF, and the trained
+        machine learning model analyzes these features to classify the
+        news as either <b>REAL NEWS</b> or <b>FAKE NEWS</b>.
+    </p>
+
+    <h2>Technologies Used</h2>
+
+    <p>
+        • Python<br>
+        • Flask<br>
+        • Machine Learning<br>
+        • Natural Language Processing<br>
+        • TF-IDF Vectorization<br>
+        • Logistic Regression<br>
+        • HTML & CSS
+    </p>
+
+    <a href="/" class="back-btn">← Back to Home</a>
+
+</div>
+
 </body>
 </html>
