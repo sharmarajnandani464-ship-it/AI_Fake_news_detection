@@ -4,11 +4,11 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-with open("fake_news_model.pkl", "rb") as file:
-    model = pickle.load(file)
+with open("model_bundle.pkl", "rb") as file:
+    bundle = pickle.load(file)
 
-with open("vectorizer.pkl", "rb") as file:
-    vectorizer = pickle.load(file)
+model = bundle["model"]
+vectorizer = bundle["vectorizer"]
 
 history = []
 
@@ -18,18 +18,22 @@ def home():
     prediction = None
 
     if request.method == "POST":
-        news = request.form.get("news", "")
+        news = request.form.get("news", "").strip()
 
-        news_vector = vectorizer.transform([news])
-        result = model.predict(news_vector)[0]
+        if news:
+            news_vector = vectorizer.transform([news])
+            result = model.predict(news_vector)[0]
 
-        prediction = "FAKE NEWS" if int(result) == 1 else "REAL NEWS"
+            if str(result) == "0":
+                prediction = "REAL NEWS"
+            else:
+                prediction = "FAKE NEWS"
 
-        history.append({
-            "news": news,
-            "prediction": prediction,
-            "time": datetime.now().strftime("%d-%m-%Y %I:%M %p")
-        })
+            history.append({
+                "news": news,
+                "prediction": prediction,
+                "time": datetime.now().strftime("%d-%m-%Y %I:%M %p")
+            })
 
     return render_template(
         "index.html",
