@@ -17,7 +17,7 @@ def make_prediction(news):
     news_vector = vectorizer.transform([news])
     result = model.predict(news_vector)[0]
 
-    prediction = "FAKE NEWS" if int(result) == 1 else "REAL NEWS"
+    prediction = "FAKE NEWS" if str(result).upper() == "FAKE" else "REAL NEWS"
 
     history.append({
         "news": news,
