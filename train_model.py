@@ -21,7 +21,7 @@ data["title"] = data["title"].astype(str)
 
 data["content"] = data["title"] + " " + data["text"]
 
-X = data["content"]
+X = data["text"]
 y = data["label"].astype(str).str.strip()
 print("\nLABEL COUNTS:")
 print(data["label"].value_counts())
@@ -75,6 +75,9 @@ model = LogisticRegression(
 
 print("\nTraining model...")
 model.fit(X_train_vectorized, y_train)
+print("MODEL CLASSES:", model.classes_)
+print("TEST ACTUAL LABELS:", y_test.head(10).tolist())
+print("TEST PREDICTED LABELS:", model.predict(X_test_vectorized[:10]).tolist())
 
 # Test
 predictions = model.predict(X_test_vectorized)
@@ -98,3 +101,31 @@ with open("vectorizer.pkl", "wb") as file:
 print("\nModel saved successfully!")
 print("Vectorizer saved successfully!")
 print("\nTraining complete!")
+print("\n===== MANUAL TESTING =====")
+
+test_news = [
+    "WASHINGTON (Reuters) - The Federal Reserve announced its latest policy decision on interest rates on Wednesday.",
+    "Scientists have discovered that eating one banana gives humans the ability to fly, according to a secret government report."
+]
+
+for news in test_news:
+    news_vector = vectorizer.transform([news])
+    result = model.predict(news_vector)[0]
+    probabilities = model.predict_proba(news_vector)[0]
+
+    print("\nNews:", news)
+    print("Predicted Label:", result)
+    print("REAL Probability:", probabilities[0])
+    print("FAKE Probability:", probabilities[1])
+    print("\n===== NEW REAL NEWS TEST =====")
+
+news = "Researchers are developing artificial intelligence systems that can help doctors analyse medical images and identify possible health conditions."
+
+news_vector = vectorizer.transform([news])
+
+result = model.predict(news_vector)[0]
+probabilities = model.predict_proba(news_vector)[0]
+
+print("Predicted Label:", result)
+print("REAL Probability:", probabilities[0])
+print("FAKE Probability:", probabilities[1])

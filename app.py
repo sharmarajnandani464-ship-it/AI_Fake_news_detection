@@ -13,7 +13,7 @@ with open("fake_news_model.pkl", "rb") as file:
 with open("vectorizer.pkl", "rb") as file:
     vectorizer = pickle.load(file)
 
-# Identify actual model labels
+# Model label mapping
 classes = {
     str(label).strip(): index
     for index, label in enumerate(model.classes_)
@@ -34,22 +34,21 @@ def home():
         news = request.form.get("news", "").strip()
 
         if news:
+
             news_vector = vectorizer.transform([news])
 
             probabilities = model.predict_proba(news_vector)[0]
 
             real_probability = probabilities[real_index]
-            fake_probability = probabilities[fake_index] 
+            fake_probability = probabilities[fake_index]
 
-            if fake_probability >= 0.65:
+            print("REAL Probability:", real_probability)
+            print("FAKE Probability:", fake_probability)
+
+            if fake_probability > real_probability:
                 prediction = "FAKE NEWS"
-
-            elif real_probability >= 0.65:
-                prediction = "REAL NEWS"
-
             else:
-                prediction = "UNCERTAIN - PLEASE VERIFY"
-
+                prediction = "REAL NEWS"
             history.append({
                 "news": news,
                 "prediction": prediction,
