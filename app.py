@@ -1,14 +1,26 @@
+
 from flask import Flask, render_template, request, redirect
 import pickle
 from datetime import datetime
 
 app = Flask(__name__)
 
+# Load trained model
 with open("fake_news_model.pkl", "rb") as file:
     model = pickle.load(file)
 
+# Load TF-IDF vectorizer
 with open("vectorizer.pkl", "rb") as file:
     vectorizer = pickle.load(file)
+
+# Identify actual model labels
+classes = {
+    str(label).strip(): index
+    for index, label in enumerate(model.classes_)
+}
+
+real_index = classes["0"]
+fake_index = classes["1"]
 
 history = []
 
@@ -18,25 +30,33 @@ def home():
     prediction = None
 
     if request.method == "POST":
-        news = request.form.get("news", "")
-        news_vector = vectorizer.transform([news])
 
-        probabilities = model.predict_proba(news_vector)[0]
-        real_probability = probabilities[0]
-        fake_probability = probabilities[1]
+        news = request.form.get("news", "").strip()
 
-        if fake_probability >= 0.65:
-            prediction = "FAKE NEWS"
-        elif real_probability >= 0.65:
-            prediction = "REAL NEWS"
-        else:
-            prediction = "UNCERTAIN - PLEASE VERIFY"
+        if news:
+            news_vector = vectorizer.transform([news])
 
-        history.append({
-            "news": news,
-            "prediction": prediction,
-            "time": datetime.now().strftime("%d-%m-%Y %I:%M %p")
-        })
+            probabilities = model.predict_proba(news_vector)[0]
+
+            real_probability = probabilities[real_index]
+            fake_probability = probabilities[fake_index] 
+
+            if fake_probability >= 0.65:
+                prediction = "FAKE NEWS"
+
+            elif real_probability >= 0.65:
+                prediction = "REAL NEWS"
+
+            else:
+                prediction = "UNCERTAIN - PLEASE VERIFY"
+
+            history.append({
+                "news": news,
+                "prediction": prediction,
+                "time": datetime.now().strftime(
+                    "%d-%m-%Y %I:%M %p"
+                )
+            })
 
     return render_template(
         "index.html",
@@ -62,4 +82,4 @@ def about():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
